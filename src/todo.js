@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import json from './log.json';
 
 export default class Todo extends Component {
 
@@ -9,26 +8,47 @@ export default class Todo extends Component {
       todos: []
     };
     const { todos } = this.state;
-    const logs = json["logs"];
-    for (const i in logs) {
-      todos.push(logs[i]["name"]);  
-    }    
+    const dbUrl = "http://localhost:3100/logs";
+    const readFetch = () => {
+      fetch(dbUrl).then((response) => {
+        if(!response.ok) {
+          console.log('Read error!');
+          throw new Error('error');
+        }
+        return response.json();
+      }).then((logs)  => {
+        const names = logs.slice(-1)[0]["names"]
+        for (let i = 0; i < names.length; i++) {
+          const thisLog = names[i]["name"];
+          todos.push(thisLog);
+        }
+      }).catch((error) => {
+        console.log(error);
+      });
+  };
+
+  readFetch();
   }
 
   onInput = (e) => {
     const timestamp = new Date().toLocaleString();
     this.setState({
       name: e.target.value + " created at: " + timestamp
-    });
+    }); 
   }
 
   addTodo = () => {
     const { todos, name } = this.state;
-    this.setState({
-      todos: [...todos, name]
-    });
-    const todoInput = document.querySelector('.todoInput');
-    todoInput.value = '';
+    if (name === undefined) {
+      alert('Please write something to add!');
+      return;
+    } else {
+      this.setState({
+        todos: [...todos, name]
+      });
+      const todoInput = document.querySelector('.todoInput');
+      todoInput.value = '';
+    }
   }
 
   doneTodo = (index) => {
@@ -65,18 +85,35 @@ export default class Todo extends Component {
 
   save = () => {
     const { todos } = this.state;
-    const logs = [];
+    const names = [];
     for (const i in todos) {
-      logs.push({name: todos[i]});
+      names.push({name: todos[i]});
     }
-    const log = {"logs": logs};
-    console.log(log);
-    const data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(log));
-    const a = document.createElement('a');
-    a.href = 'data:' + data;
-    a.download = 'log.json';
-    a.innerHTML = 'download JSON';
-    a.click();
+    const log = {names};
+    const dbUrl = "http://localhost:3100/logs";
+    fetch(dbUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(log),
+    }).then((response) => {
+      if(!response.ok) {
+        console.log('Save error!');
+        throw new Error('error');
+      }
+      return response.json();
+    }).then((data) => {
+      console.log('Success!');
+    }).catch((error) => {
+      console.error('Error:', error);
+    });
+    // const data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(log));
+    // const a = document.createElement('a');
+    // a.href = 'data:' + data;
+    // a.download = 'log.json';
+    // a.innerHTML = 'download JSON';
+    // a.click();
   }
 
   clearAll = () => {

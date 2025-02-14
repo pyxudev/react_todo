@@ -3,7 +3,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 1. Install dependencies
-npm install react react-scripts react-dom web-vitals @babel/plugin-proposal-private-property-in-object
+npm install react react-scripts react-dom web-vitals @babel/plugin-proposal-private-property-in-object json-server
 
 2. Add following to the package.json
   "scripts": {
@@ -25,9 +25,16 @@ npm install react react-scripts react-dom web-vitals @babel/plugin-proposal-priv
     ]
   }
 
+3. Create a JSON db
+Create a file named `log.json` at the project directory
+
 ## Available Scripts
 
 In the project directory, you can run:
+
+### `npx json-server --watch log.json --port 3100`
+
+Runs the JSON db server at 3100 port
 
 ### `npm start`
 
