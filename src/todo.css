@@ -1,0 +1,32 @@
+.todoInput {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+.modenBtn {
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.regBtn {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    margin-bottom: 10px;
+}
+.editBtn {
+    background-color: #2196F3;
+    margin-left: 20px;
+}
+.doneBtn {
+    background-color: #4CAF50;
+    margin-left: 5px;
+}
+.delBtn {
+    background-color: #f44336;
+    margin-left: 5px;
+}
