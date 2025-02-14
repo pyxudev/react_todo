@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import json from './log.json';
 
 export default class Todo extends Component {
 
@@ -7,6 +8,11 @@ export default class Todo extends Component {
     this.state = {
       todos: []
     };
+    const { todos } = this.state;
+    const logs = json["logs"];
+    for (const i in logs) {
+      todos.push(logs[i]["name"]);  
+    }    
   }
 
   onInput = (e) => {
@@ -17,7 +23,7 @@ export default class Todo extends Component {
   }
 
   addTodo = () => {
-    const { todos, name} = this.state;
+    const { todos, name } = this.state;
     this.setState({
       todos: [...todos, name]
     });
@@ -57,21 +63,48 @@ export default class Todo extends Component {
     });
   }
 
+  save = () => {
+    const { todos } = this.state;
+    const logs = [];
+    for (const i in todos) {
+      logs.push({name: todos[i]});
+    }
+    const log = {"logs": logs};
+    console.log(log);
+    const data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(log));
+    const a = document.createElement('a');
+    a.href = 'data:' + data;
+    a.download = 'log.json';
+    a.innerHTML = 'download JSON';
+    a.click();
+  }
+
+  clearAll = () => {
+    this.setState({
+      todos: []
+    }) 
+  }
+
   render() {
     const { todos } = this.state;    
     return (
-    <div>
-      <h1>Todo</h1>
-      <input type="text" className="todoInput" onInput={this.onInput}/>
-      <button className="modenBtn regBtn" onClick={this.addTodo}>Add</button>
-      <ul>
-        {todos.map((todo, index) => <li key={index}>
-          {todo}
-          <button className="modenBtn editBtn" onClick={() => { this.editTodo(index)}}>Edit</button>
-          <button className="modenBtn doneBtn" onClick={() => { this.doneTodo(index)}}>Done</button>
-          <button className="modenBtn delBtn" onClick={() => { this.removeTodo(index) }}>Delete</button>
-        </li>)}
-      </ul>
-    </div>);
+    <div className="todos">
+      <div className="todoReg">
+        <h1>Todo</h1>
+        <input type="text" className="todoInput" onInput={this.onInput}/>
+        <button className="modenBtn regBtn" onClick={this.addTodo}>Add</button>
+        <ul>
+          {todos.map((todo, index) => <li key={index}>
+            {todo}
+            <button className="modenBtn editBtn" onClick={() => { this.editTodo(index)} }>Edit</button>
+            <button className="modenBtn doneBtn" onClick={() => { this.doneTodo(index)} }>Done</button>
+            <button className="modenBtn delBtn" onClick={() => { this.removeTodo(index) }}>Delete</button>
+          </li>)}
+        </ul>
+      </div>
+      <button className="modenBtn doneBtn" onClick={() => { this.save()} }>Save Logs</button>
+      <button className="modenBtn delBtn" onClick={() => { this.clearAll()} }>Clear All</button>
+    </div>
+    );
   }
 }
