@@ -4,7 +4,7 @@ import './index.css';
 // import App from './App';
 import Todo from './todo';
 import './todo.css';
-import reportWebVitals from './reportWebVitals';
+// import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
