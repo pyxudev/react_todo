@@ -3,8 +3,9 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 1. Install dependencies
+```bash
 npm install react react-scripts react-dom web-vitals @babel/plugin-proposal-private-property-in-object json-server
-
+```
 2. Add following to the package.json
 ```json
   "scripts": {
@@ -26,7 +27,7 @@ npm install react react-scripts react-dom web-vitals @babel/plugin-proposal-priv
     ]
   }
 ```
-4. Create a JSON db
+3. Create a JSON db<br>
 Create a file named `log.json` at the project directory
 
 ## Available Scripts
