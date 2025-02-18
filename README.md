@@ -6,6 +6,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 npm install react react-scripts react-dom web-vitals @babel/plugin-proposal-private-property-in-object json-server
 
 2. Add following to the package.json
+```json
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -24,8 +25,8 @@ npm install react react-scripts react-dom web-vitals @babel/plugin-proposal-priv
       "last 1 safari version"
     ]
   }
-
-3. Create a JSON db
+```
+4. Create a JSON db
 Create a file named `log.json` at the project directory
 
 ## Available Scripts
